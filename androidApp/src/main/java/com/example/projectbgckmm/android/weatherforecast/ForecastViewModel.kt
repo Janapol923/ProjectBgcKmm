@@ -9,6 +9,7 @@ import com.example.projectbgckmm.models.Response
 import com.example.projectbgckmm.models.WeatherForecastResponse
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class ForecastViewModel(
@@ -19,11 +20,16 @@ class ForecastViewModel(
         MutableStateFlow<Response<WeatherForecastResponse>>(Response.Success(null))
     val forecastState: StateFlow<Response<WeatherForecastResponse>> = _forecastState
 
+    init {
+        fetchWeatherForecast()
+    }
 
-    fun fetchWeatherForecast() {
+    private fun fetchWeatherForecast() {
         viewModelScope.launch {
             weatherRepository.getWeatherForecast().collect { response ->
-                _forecastState.value = response
+                _forecastState.update {
+                    response
+                }
             }
         }
     }

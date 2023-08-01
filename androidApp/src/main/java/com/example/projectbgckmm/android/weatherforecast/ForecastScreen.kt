@@ -35,17 +35,8 @@ fun ForecastScreen(
     navController: NavController,
     viewModel: ForecastViewModel = viewModel(),
 ) {
-
-    fun launch() {
-        viewModel.fetchWeatherForecast()
-    }
-
-    launch()
-
     Surface {
         val forecastResponse = viewModel.forecastState.collectAsState()
-            //when () {
-            //when (val forecastResponse = viewModel.forecastState.collect()) {
         when (forecastResponse.value) {
                 is Response.Failure -> {
                     val res = forecastResponse.value as Response.Failure

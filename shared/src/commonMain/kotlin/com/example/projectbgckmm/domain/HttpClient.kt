@@ -7,18 +7,9 @@ import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.observer.ResponseObserver
-import io.ktor.client.request.HttpSendPipeline
 import io.ktor.client.request.header
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
-
-fun getHttpClient(): HttpClient {
-
-    httpClient.sendPipeline.intercept(HttpSendPipeline.State) {
-        context.headers.append("AppVersion", "version_here") //BuildConfig.VERSION_NAME)
-    }
-    return httpClient
-}
 
 val httpClient = HttpClient() {
     val log = CustomLogger()
